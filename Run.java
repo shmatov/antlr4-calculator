@@ -9,8 +9,8 @@ public class Run {
         CalculatorParser parser = new CalculatorParser(tokens);
         ParseTree tree = parser.input();
 
-//        System.out.println(tree.toStringTree(parser));
         CalculatorBaseVisitorImpl calcVisitor = new CalculatorBaseVisitorImpl();
-        calcVisitor.visit(tree);
+        Double result = calcVisitor.visit(tree);
+        System.out.println("Result: " + result);
     }
 }

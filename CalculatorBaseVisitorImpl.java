@@ -12,12 +12,17 @@ public class CalculatorBaseVisitorImpl extends CalculatorBaseVisitor<Double> {
     
     @Override
     public Double visitMinus(@NotNull CalculatorParser.MinusContext ctx) {
-        return visit(ctx.multOrDiv()) - visit(ctx.plusOrMinus());
+        return visit(ctx.plusOrMinus()) - visit(ctx.multOrDiv());
     }
 
     @Override
     public Double visitMultiplication(@NotNull CalculatorParser.MultiplicationContext ctx) {
-        return visit(ctx.pow()) * visit(ctx.multOrDiv());
+        return visit(ctx.multOrDiv()) * visit(ctx.pow());
+    }
+
+    @Override
+    public Double visitDivision(@NotNull CalculatorParser.DivisionContext ctx) {
+        return visit(ctx.multOrDiv()) / visit(ctx.pow());
     }
 
     @Override
@@ -25,11 +30,6 @@ public class CalculatorBaseVisitorImpl extends CalculatorBaseVisitor<Double> {
         Double value = visit(ctx.plusOrMinus());
         variables.put(ctx.ID().getText(), value);
         return value;
-    }
-
-    @Override
-    public Double visitDivision(@NotNull CalculatorParser.DivisionContext ctx) {
-        return visit(ctx.pow()) / visit(ctx.multOrDiv());
     }
 
     @Override
@@ -42,13 +42,6 @@ public class CalculatorBaseVisitorImpl extends CalculatorBaseVisitor<Double> {
     @Override
     public Double visitChangeSign(@NotNull CalculatorParser.ChangeSignContext ctx) {
         return -1*visit(ctx.unaryMinus());
-    }
-
-    @Override
-    public Double visitShowResult(@NotNull CalculatorParser.ShowResultContext ctx) {
-        Double result = visit(ctx.plusOrMinus());
-        System.out.println("Result: " + result);
-        return result;
     }
 
     @Override
@@ -79,5 +72,10 @@ public class CalculatorBaseVisitorImpl extends CalculatorBaseVisitor<Double> {
     @Override
     public Double visitDouble(@NotNull CalculatorParser.DoubleContext ctx) {
         return Double.parseDouble(ctx.DOUBLE().getText());
+    }
+
+    @Override
+    public Double visitCalculate(@NotNull CalculatorParser.CalculateContext ctx) {
+        return visit(ctx.plusOrMinus());
     }
 }

@@ -18,7 +18,7 @@ RPAR  : ')';
 
 input
     : setVar NL input     # ToSetVar
-    | plusOrMinus NL? EOF # ShowResult
+    | plusOrMinus NL? EOF # Calculate
     ;
 
 setVar
@@ -27,14 +27,14 @@ setVar
 
 
 plusOrMinus 
-    : multOrDiv PLUS plusOrMinus  # Plus
-    | multOrDiv MINUS plusOrMinus # Minus
+    : plusOrMinus PLUS multOrDiv  # Plus
+    | plusOrMinus MINUS multOrDiv # Minus
     | multOrDiv                   # ToMultOrDiv
     ;
 
 multOrDiv
-    : pow MULT multOrDiv # Multiplication
-    | pow DIV multOrDiv  # Division
+    : multOrDiv MULT pow # Multiplication
+    | multOrDiv DIV pow  # Division
     | pow                # ToPow
     ;
 

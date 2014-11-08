@@ -1,13 +1,16 @@
-Config
-======
+Getting started
+===============
 
-1. `antrl Calculator.g4 -no-listener -visitor`
-2. `javac *.java`
+1. Install ANTLR v4 ([manual](https://theantlrguy.atlassian.net/wiki/display/ANTLR4/Getting+Started+with+ANTLR+v4))
+1. Generate ANTLR files `antlr4 Calculator.g4 -no-listener -visitor -o app`
+1. Copy visitor implementation `cp *.java app`
+1. Compile `javac app/*.java`
 
-Example
-=======
+Run
+===
 
-Type in console `java Run`
+Type in console `cd app && java Run`
+
 ```
 a = 1+2
 b = a^2
