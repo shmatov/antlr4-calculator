@@ -1,7 +1,7 @@
 Getting started
 ===============
 
-1. Install ANTLR v4 ([manual](https://theantlrguy.atlassian.net/wiki/display/ANTLR4/Getting+Started+with+ANTLR+v4))
+1. Install ANTLR v4 ([manual](https://github.com/antlr/antlr4/blob/master/doc/getting-started.md#installation))
 1. Generate ANTLR files `antlr4 Calculator.g4 -no-listener -visitor -o app`
 1. Copy visitor implementation `cp *.java app`
 1. Compile `javac app/*.java`

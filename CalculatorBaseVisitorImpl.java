@@ -1,81 +1,79 @@
-import org.antlr.v4.runtime.misc.NotNull;
-
 import java.util.HashMap;
 
 public class CalculatorBaseVisitorImpl extends CalculatorBaseVisitor<Double> {
     private HashMap<String, Double> variables = new HashMap<String, Double>();
 
     @Override
-    public Double visitPlus(@NotNull CalculatorParser.PlusContext ctx) {
+    public Double visitPlus(CalculatorParser.PlusContext ctx) {
         return visit(ctx.plusOrMinus()) + visit(ctx.multOrDiv());
     }
     
     @Override
-    public Double visitMinus(@NotNull CalculatorParser.MinusContext ctx) {
+    public Double visitMinus(CalculatorParser.MinusContext ctx) {
         return visit(ctx.plusOrMinus()) - visit(ctx.multOrDiv());
     }
 
     @Override
-    public Double visitMultiplication(@NotNull CalculatorParser.MultiplicationContext ctx) {
+    public Double visitMultiplication(CalculatorParser.MultiplicationContext ctx) {
         return visit(ctx.multOrDiv()) * visit(ctx.pow());
     }
 
     @Override
-    public Double visitDivision(@NotNull CalculatorParser.DivisionContext ctx) {
+    public Double visitDivision(CalculatorParser.DivisionContext ctx) {
         return visit(ctx.multOrDiv()) / visit(ctx.pow());
     }
 
     @Override
-    public Double visitSetVariable(@NotNull CalculatorParser.SetVariableContext ctx) {
+    public Double visitSetVariable(CalculatorParser.SetVariableContext ctx) {
         Double value = visit(ctx.plusOrMinus());
         variables.put(ctx.ID().getText(), value);
         return value;
     }
 
     @Override
-    public Double visitPower(@NotNull CalculatorParser.PowerContext ctx) {
+    public Double visitPower(CalculatorParser.PowerContext ctx) {
         if (ctx.pow() != null)
             return Math.pow(visit(ctx.unaryMinus()), visit(ctx.pow()));
         return visit(ctx.unaryMinus());
     }
 
     @Override
-    public Double visitChangeSign(@NotNull CalculatorParser.ChangeSignContext ctx) {
+    public Double visitChangeSign(CalculatorParser.ChangeSignContext ctx) {
         return -1*visit(ctx.unaryMinus());
     }
 
     @Override
-    public Double visitBraces(@NotNull CalculatorParser.BracesContext ctx) {
+    public Double visitBraces(CalculatorParser.BracesContext ctx) {
         return visit(ctx.plusOrMinus());
     }
 
     @Override
-    public Double visitConstantPI(@NotNull CalculatorParser.ConstantPIContext ctx) {
+    public Double visitConstantPI(CalculatorParser.ConstantPIContext ctx) {
         return Math.PI;
     }
 
     @Override
-    public Double visitConstantE(@NotNull CalculatorParser.ConstantEContext ctx) {
+    public Double visitConstantE(CalculatorParser.ConstantEContext ctx) {
         return Math.E;
     }
 
     @Override
-    public Double visitInt(@NotNull CalculatorParser.IntContext ctx) {
+    public Double visitInt(CalculatorParser.IntContext ctx) {
         return Double.parseDouble(ctx.INT().getText());
     }
 
     @Override
-    public Double visitVariable(@NotNull CalculatorParser.VariableContext ctx) {
+    public Double visitVariable(CalculatorParser.VariableContext ctx) {
         return variables.get(ctx.ID().getText());
     }
 
     @Override
-    public Double visitDouble(@NotNull CalculatorParser.DoubleContext ctx) {
+    public Double visitDouble(CalculatorParser.DoubleContext ctx) {
         return Double.parseDouble(ctx.DOUBLE().getText());
     }
 
     @Override
-    public Double visitCalculate(@NotNull CalculatorParser.CalculateContext ctx) {
+    public Double visitCalculate(CalculatorParser.CalculateContext ctx) {
         return visit(ctx.plusOrMinus());
     }
 }
